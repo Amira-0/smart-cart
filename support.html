@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Support</title>
+
+    <style>
+      body {
+        margin: 0;
+        font-family: "Segoe UI";
+        background: #f5f5f5;
+      }
+
+      .header {
+        background: #6a0dad;
+        color: white;
+        padding: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .header span {
+        cursor: pointer;
+      }
+
+      .container {
+        padding: 20px;
+        padding-bottom: 80px;
+      }
+
+      .card {
+        background: white;
+        padding: 15px;
+        margin-bottom: 12px;
+        border-radius: 12px;
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+      }
+
+      .card h3 {
+        color: #6a0dad;
+        margin-top: 0;
+      }
+
+      input,
+      textarea {
+        width: 100%;
+        padding: 12px;
+        margin: 8px 0;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+      }
+
+      textarea {
+        height: 100px;
+        resize: none;
+      }
+
+      .send-btn {
+        width: 100%;
+        padding: 14px;
+        background: #6a0dad;
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      .message {
+        display: none;
+        background: white;
+        padding: 12px;
+        border-radius: 12px;
+        margin-bottom: 15px;
+        text-align: center;
+        font-weight: bold;
+      }
+
+      .footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        background: white;
+        text-align: center;
+        padding: 10px;
+        font-size: 14px;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="header">
+      <span onclick="location.href = 'home.php'">⬅️ Home</span>
+      <div>Support</div>
+      <div></div>
+    </div>
+
+    <div class="container">
+      <div id="message" class="message">✅ Your message has been sent!</div>
+
+      <div class="card">
+        <h3>Customer Service</h3>
+        <p>Email: support@smartcart.com</p>
+        <p>Phone: +968 1234 5678</p>
+        <p>Working Hours: 8:00 AM - 8:00 PM</p>
+      </div>
+
+      <div class="card">
+        <h3>Send a Message</h3>
+
+        <input type="text" placeholder="Your Name" />
+        <input type="email" placeholder="Your Email" />
+        <textarea placeholder="Write your message here..."></textarea>
+
+        <button class="send-btn" onclick="sendMessage()">Send</button>
+      </div>
+    </div>
+
+    <div class="footer">SmartCart | support@smartcart.com</div>
+
+    <script>
+      function sendMessage() {
+        document.getElementById("message").style.display = "block";
+      }
+    </script>
+  </body>
+</html>

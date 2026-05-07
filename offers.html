@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Offers</title>
+
+    <style>
+      body {
+        margin: 0;
+        font-family: "Segoe UI";
+        background: #f5f5f5;
+      }
+
+      .header {
+        background: #6a0dad;
+        color: white;
+        padding: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .header span {
+        cursor: pointer;
+      }
+
+      .container {
+        padding: 20px;
+        padding-bottom: 80px;
+      }
+
+      .offer {
+        background: white;
+        padding: 15px;
+        margin-bottom: 12px;
+        border-radius: 12px;
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+      }
+
+      .offer-title {
+        font-weight: bold;
+        color: #6a0dad;
+        margin-bottom: 5px;
+      }
+
+      .offer-desc {
+        color: #555;
+        font-size: 14px;
+      }
+
+      .badge {
+        display: inline-block;
+        background: #f3e8ff;
+        color: #6a0dad;
+        padding: 5px 10px;
+        border-radius: 20px;
+        margin-top: 10px;
+        font-size: 13px;
+      }
+
+      .footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        background: white;
+        text-align: center;
+        padding: 10px;
+        font-size: 14px;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="header">
+      <span onclick="location.href = 'home.php'">⬅️ Home</span>
+      <div>Offers</div>
+      <div></div>
+    </div>
+
+    <div class="container">
+      <div class="offer">
+        <div class="offer-title">🔥 25% OFF Fruits</div>
+        <div class="offer-desc">
+          Fresh apples, bananas, and oranges at a special discount.
+        </div>
+        <div class="badge">Limited Time</div>
+      </div>
+
+      <div class="offer">
+        <div class="offer-title">🥤 Buy 1 Get 1 Free Drinks</div>
+        <div class="offer-desc">
+          Available on selected juices and soft drinks.
+        </div>
+        <div class="badge">Best Deal</div>
+      </div>
+
+      <div class="offer">
+        <div class="offer-title">🍫 30% OFF Snacks</div>
+        <div class="offer-desc">
+          Save more on chocolates, chips, and biscuits.
+        </div>
+        <div class="badge">Popular</div>
+      </div>
+    </div>
+
+    <div class="footer">SmartCart | support@smartcart.com</div>
+  </body>
+</html>

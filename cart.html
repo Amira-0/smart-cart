@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>My Cart</title>
+
+    <style>
+      body {
+        margin: 0;
+        font-family: "Segoe UI";
+        background: #f5f5f5;
+      }
+
+      .header {
+        background: #6a0dad;
+        color: white;
+        padding: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .header span {
+        cursor: pointer;
+      }
+
+      .container {
+        padding: 20px;
+        padding-bottom: 80px;
+      }
+
+      .item {
+        background: white;
+        padding: 15px;
+        margin-bottom: 12px;
+        border-radius: 12px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .price {
+        color: #6a0dad;
+        font-weight: bold;
+      }
+
+      .star {
+        font-size: 22px;
+        cursor: pointer;
+        color: #bbb;
+      }
+
+      .star.active {
+        color: #f5b301;
+      }
+
+      .total {
+        background: white;
+        padding: 15px;
+        border-radius: 12px;
+        margin-top: 20px;
+        font-weight: bold;
+        text-align: center;
+      }
+
+      .checkout-btn {
+        width: 100%;
+        padding: 13px;
+        margin-top: 15px;
+        border: none;
+        border-radius: 12px;
+        background: #6a0dad;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      .footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        background: white;
+        text-align: center;
+        padding: 10px;
+        font-size: 14px;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="header">
+      <span onclick="location.href = 'home.php'">⬅️ Home</span>
+      <div>My Cart</div>
+      <div></div>
+    </div>
+
+    <div class="container">
+      <div class="item">
+        <div>
+          <strong>Milk</strong><br />
+          <span class="price">1.50 OMR</span>
+        </div>
+        <span class="star" onclick="toggleFavorite(this, 'Milk')">☆</span>
+      </div>
+
+      <div class="item">
+        <div>
+          <strong>Bread</strong><br />
+          <span class="price">0.80 OMR</span>
+        </div>
+        <span class="star" onclick="toggleFavorite(this, 'Bread')">☆</span>
+      </div>
+
+      <div class="item">
+        <div>
+          <strong>Apple Juice</strong><br />
+          <span class="price">1.20 OMR</span>
+        </div>
+        <span class="star" onclick="toggleFavorite(this, 'Apple Juice')"
+          >☆</span
+        >
+      </div>
+
+      <div class="total">Total: 3.50 OMR</div>
+
+      <button class="checkout-btn" onclick="location.href = 'checkout.php'">
+        Proceed to Checkout
+      </button>
+    </div>
+
+    <div class="footer">SmartCart | support@smartcart.com</div>
+
+    <script>
+      function toggleFavorite(element, itemName) {
+        let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+
+        if (favorites.includes(itemName)) {
+          favorites = favorites.filter((item) => item !== itemName);
+          element.classList.remove("active");
+          element.innerHTML = "☆";
+        } else {
+          favorites.push(itemName);
+          element.classList.add("active");
+          element.innerHTML = "★";
+        }
+
+        localStorage.setItem("favorites", JSON.stringify(favorites));
+      }
+
+      window.onload = function () {
+        let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+
+        document.querySelectorAll(".star").forEach((star) => {
+          let itemName = star.getAttribute("onclick").match(/'([^']+)'/)[1];
+
+          if (favorites.includes(itemName)) {
+            star.classList.add("active");
+            star.innerHTML = "★";
+          }
+        });
+      };
+    </script>
+  </body>
+</html>

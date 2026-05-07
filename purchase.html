@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Purchases</title>
+
+    <style>
+      body {
+        margin: 0;
+        font-family: "Segoe UI";
+        background: #f5f5f5;
+      }
+
+      .header {
+        background: #6a0dad;
+        color: white;
+        padding: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .header span {
+        cursor: pointer;
+      }
+
+      .container {
+        padding: 20px;
+        padding-bottom: 80px;
+      }
+
+      .card {
+        background: white;
+        padding: 15px;
+        margin-bottom: 12px;
+        border-radius: 12px;
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+      }
+
+      .card h3 {
+        color: #6a0dad;
+        margin-top: 0;
+      }
+
+      .status {
+        display: inline-block;
+        background: #f3e8ff;
+        color: #6a0dad;
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-size: 13px;
+      }
+
+      .footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        background: white;
+        text-align: center;
+        padding: 10px;
+        font-size: 14px;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="header">
+      <span onclick="location.href = 'home.php'">⬅️ Home</span>
+      <div>Purchases</div>
+      <div></div>
+    </div>
+
+    <div class="container">
+      <div class="card">
+        <h3>Current Purchase</h3>
+        <p>Milk, Bread, Apple Juice</p>
+        <p>Total: 3.50 OMR</p>
+        <span class="status">Ready for Checkout</span>
+      </div>
+
+      <div class="card">
+        <h3>Purchase Notes</h3>
+        <p>
+          Your completed purchases will appear in Receipts after confirming
+          payment.
+        </p>
+      </div>
+    </div>
+
+    <div class="footer">SmartCart | support@smartcart.com</div>
+  </body>
+</html>

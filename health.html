@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Health Preferences</title>
+
+    <style>
+      body {
+        margin: 0;
+        font-family: "Segoe UI";
+        background: #f5f5f5;
+      }
+
+      .header {
+        background: #6a0dad;
+        color: white;
+        padding: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .header span {
+        cursor: pointer;
+      }
+
+      .container {
+        padding: 20px;
+        padding-bottom: 80px;
+      }
+
+      .form-box {
+        background: white;
+        padding: 20px;
+        border-radius: 15px;
+      }
+
+      input,
+      select {
+        width: 100%;
+        padding: 12px;
+        margin: 10px 0;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+      }
+
+      .save-btn {
+        width: 100%;
+        padding: 14px;
+        background: #6a0dad;
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      .message {
+        background: white;
+        padding: 12px;
+        border-radius: 12px;
+        margin-bottom: 15px;
+        text-align: center;
+        display: none;
+        font-weight: bold;
+      }
+
+      .footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        background: white;
+        text-align: center;
+        padding: 10px;
+        font-size: 14px;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="header">
+      <span onclick="location.href = 'home.php'">⬅️ Home</span>
+      <div>Health</div>
+      <div></div>
+    </div>
+
+    <div class="container">
+      <div id="message" class="message">✅ Health preferences saved!</div>
+
+      <div class="form-box">
+        <input
+          type="text"
+          id="allergies"
+          placeholder="Allergies e.g. nuts, milk"
+        />
+
+        <select id="diet">
+          <option value="">Select Diet Plan</option>
+          <option value="None">None</option>
+          <option value="Low Sugar">Low Sugar</option>
+          <option value="Vegetarian">Vegetarian</option>
+          <option value="Gluten Free">Gluten Free</option>
+        </select>
+
+        <input
+          type="text"
+          id="condition"
+          placeholder="Health condition e.g. diabetes"
+        />
+
+        <button class="save-btn" onclick="saveHealth()">Save</button>
+      </div>
+    </div>
+
+    <div class="footer">SmartCart | support@smartcart.com</div>
+
+    <script>
+      function saveHealth() {
+        let allergies = document.getElementById("allergies").value;
+        let diet = document.getElementById("diet").value;
+        let condition = document.getElementById("condition").value;
+
+        let healthData = {
+          allergies: allergies,
+          diet: diet,
+          condition: condition,
+        };
+
+        localStorage.setItem("healthData", JSON.stringify(healthData));
+
+        document.getElementById("message").style.display = "block";
+      }
+    </script>
+  </body>
+</html>

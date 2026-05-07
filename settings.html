@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Settings</title>
+
+    <style>
+      body {
+        margin: 0;
+        font-family: "Segoe UI";
+        background: #f5f5f5;
+      }
+
+      .header {
+        background: #6a0dad;
+        color: white;
+        padding: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .header span {
+        cursor: pointer;
+      }
+
+      .container {
+        padding: 20px;
+        padding-bottom: 80px;
+      }
+
+      .setting-card {
+        background: white;
+        padding: 15px;
+        margin-bottom: 12px;
+        border-radius: 12px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .setting-title {
+        font-weight: bold;
+      }
+
+      .setting-desc {
+        color: #777;
+        font-size: 13px;
+        margin-top: 4px;
+      }
+
+      select {
+        padding: 8px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+      }
+
+      .toggle {
+        width: 45px;
+        height: 24px;
+        background: #ccc;
+        border-radius: 20px;
+        position: relative;
+        cursor: pointer;
+      }
+
+      .toggle::after {
+        content: "";
+        width: 20px;
+        height: 20px;
+        background: white;
+        border-radius: 50%;
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        transition: 0.3s;
+      }
+
+      .toggle.active {
+        background: #6a0dad;
+      }
+
+      .toggle.active::after {
+        left: 23px;
+      }
+
+      .save-btn {
+        width: 100%;
+        padding: 14px;
+        background: #6a0dad;
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      .message {
+        display: none;
+        background: white;
+        padding: 12px;
+        border-radius: 12px;
+        margin-bottom: 15px;
+        text-align: center;
+        font-weight: bold;
+      }
+
+      .footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        background: white;
+        text-align: center;
+        padding: 10px;
+        font-size: 14px;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="header">
+      <span onclick="location.href = 'home.php'">⬅️ Home</span>
+      <div>Settings</div>
+      <div></div>
+    </div>
+
+    <div class="container">
+      <div id="message" class="message">✅ Settings saved!</div>
+
+      <div class="setting-card">
+        <div>
+          <div class="setting-title">Language</div>
+          <div class="setting-desc">Choose app language</div>
+        </div>
+
+        <select>
+          <option>English</option>
+          <option>Arabic</option>
+        </select>
+      </div>
+
+      <div class="setting-card">
+        <div>
+          <div class="setting-title">Notifications</div>
+          <div class="setting-desc">Receive offer alerts</div>
+        </div>
+
+        <div class="toggle" onclick="toggleSwitch(this)"></div>
+      </div>
+
+      <div class="setting-card">
+        <div>
+          <div class="setting-title">Budget Alerts</div>
+          <div class="setting-desc">Alert when cart total is high</div>
+        </div>
+
+        <div class="toggle active" onclick="toggleSwitch(this)"></div>
+      </div>
+
+      <div class="setting-card">
+        <div>
+          <div class="setting-title">Theme</div>
+          <div class="setting-desc">Current theme style</div>
+        </div>
+
+        <select>
+          <option>Purple</option>
+          <option>Light</option>
+          <option>Dark</option>
+        </select>
+      </div>
+
+      <button class="save-btn" onclick="saveSettings()">Save Settings</button>
+    </div>
+
+    <div class="footer">SmartCart | support@smartcart.com</div>
+
+    <script>
+      function toggleSwitch(element) {
+        element.classList.toggle("active");
+      }
+
+      function saveSettings() {
+        document.getElementById("message").style.display = "block";
+      }
+    </script>
+  </body>
+</html>

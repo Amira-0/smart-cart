@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Shopping List</title>
+
+    <style>
+      body {
+        margin: 0;
+        font-family: "Segoe UI";
+        background: #f5f5f5;
+      }
+
+      .header {
+        background: #6a0dad;
+        color: white;
+        padding: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .header span {
+        cursor: pointer;
+      }
+
+      .container {
+        padding: 20px;
+        padding-bottom: 80px;
+      }
+
+      .add-box {
+        background: white;
+        padding: 15px;
+        border-radius: 12px;
+        margin-bottom: 15px;
+        display: flex;
+        gap: 10px;
+      }
+
+      input {
+        flex: 1;
+        padding: 12px;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+      }
+
+      .add-btn {
+        padding: 12px 16px;
+        border: none;
+        border-radius: 10px;
+        background: #6a0dad;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      .item {
+        background: white;
+        padding: 15px;
+        margin-bottom: 10px;
+        border-radius: 12px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .star {
+        font-size: 22px;
+        cursor: pointer;
+        color: #bbb;
+      }
+
+      .star.active {
+        color: #f5b301;
+      }
+
+      .delete {
+        color: red;
+        cursor: pointer;
+        margin-left: 12px;
+      }
+
+      .footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        background: white;
+        text-align: center;
+        padding: 10px;
+        font-size: 14px;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="header">
+      <span onclick="location.href = 'home.php'">⬅️ Home</span>
+      <div>Shopping List</div>
+      <div></div>
+    </div>
+
+    <div class="container">
+      <div class="add-box">
+        <input type="text" id="itemInput" placeholder="Add product name" />
+        <button class="add-btn" onclick="addItem()">Add</button>
+      </div>
+
+      <div id="list"></div>
+    </div>
+
+    <div class="footer">SmartCart | support@smartcart.com</div>
+
+    <script>
+      let shoppingList = JSON.parse(
+        localStorage.getItem("shoppingList") || "[]",
+      );
+
+      function saveList() {
+        localStorage.setItem("shoppingList", JSON.stringify(shoppingList));
+      }
+
+      function renderList() {
+        let list = document.getElementById("list");
+        let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+
+        if (shoppingList.length === 0) {
+          list.innerHTML =
+            "<p style='text-align:center;color:#777;'>No items added yet.</p>";
+          return;
+        }
+
+        list.innerHTML = "";
+
+        shoppingList.forEach((item, index) => {
+          let isFav = favorites.includes(item);
+
+          list.innerHTML += `
+      <div class="item">
+        <span>${item}</span>
+        <div>
+          <span class="star ${isFav ? "active" : ""}" onclick="toggleFavorite('${item}')">
+            ${isFav ? "★" : "☆"}
+          </span>
+          <span class="delete" onclick="deleteItem(${index})">Delete</span>
+        </div>
+      </div>
+    `;
+        });
+      }
+
+      function addItem() {
+        let input = document.getElementById("itemInput");
+        let value = input.value.trim();
+
+        if (value === "") {
+          alert("Please enter product name");
+          return;
+        }
+
+        shoppingList.push(value);
+        saveList();
+        input.value = "";
+        renderList();
+      }
+
+      function deleteItem(index) {
+        shoppingList.splice(index, 1);
+        saveList();
+        renderList();
+      }
+
+      function toggleFavorite(item) {
+        let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+
+        if (favorites.includes(item)) {
+          favorites = favorites.filter((fav) => fav !== item);
+        } else {
+          favorites.push(item);
+        }
+
+        localStorage.setItem("favorites", JSON.stringify(favorites));
+        renderList();
+      }
+
+      renderList();
+    </script>
+  </body>
+</html>
