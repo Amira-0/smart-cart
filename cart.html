@@ -3,78 +3,68 @@
   <head>
     <meta charset="UTF-8" />
     <title>My Cart</title>
-
     <style>
       body {
         margin: 0;
-        font-family: "Segoe UI";
+        font-family: "Segoe UI", sans-serif;
         background: #f5f5f5;
       }
-
       .header {
         background: #6a0dad;
         color: white;
         padding: 15px;
         display: flex;
         justify-content: space-between;
-        align-items: center;
       }
-
       .header span {
         cursor: pointer;
       }
-
       .container {
         padding: 20px;
-        padding-bottom: 80px;
+        padding-bottom: 90px;
       }
-
-      .item {
+      .card,
+      .item,
+      .budget-box {
         background: white;
         padding: 15px;
         margin-bottom: 12px;
         border-radius: 12px;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.05);
+      }
+      .item {
         display: flex;
         justify-content: space-between;
         align-items: center;
       }
-
-      .price {
-        color: #6a0dad;
-        font-weight: bold;
-      }
-
-      .star {
-        font-size: 22px;
-        cursor: pointer;
-        color: #bbb;
-      }
-
-      .star.active {
-        color: #f5b301;
-      }
-
-      .total {
-        background: white;
-        padding: 15px;
-        border-radius: 12px;
-        margin-top: 20px;
-        font-weight: bold;
-        text-align: center;
-      }
-
-      .checkout-btn {
-        width: 100%;
-        padding: 13px;
-        margin-top: 15px;
-        border: none;
-        border-radius: 12px;
+      button {
         background: #6a0dad;
         color: white;
-        font-weight: bold;
+        border: none;
+        border-radius: 10px;
+        padding: 10px;
         cursor: pointer;
       }
-
+      input {
+        width: 100%;
+        padding: 10px;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+        margin-top: 8px;
+      }
+      .alert {
+        background: #ffe6e6;
+        color: #b00020;
+        padding: 12px;
+        border-radius: 10px;
+        margin-top: 10px;
+        display: none;
+      }
+      .total {
+        font-weight: bold;
+        font-size: 18px;
+        margin-top: 15px;
+      }
       .footer {
         position: fixed;
         bottom: 0;
@@ -82,8 +72,7 @@
         background: white;
         text-align: center;
         padding: 10px;
-        font-size: 14px;
-        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
       }
     </style>
   </head>
@@ -96,70 +85,132 @@
     </div>
 
     <div class="container">
-      <div class="item">
-        <div>
-          <strong>Milk</strong><br />
-          <span class="price">1.50 OMR</span>
+      <div class="budget-box">
+        <h3>Set Your Budget</h3>
+        <input
+          type="number"
+          id="budgetInput"
+          placeholder="Enter budget in OMR"
+        />
+        <br /><br />
+        <button onclick="saveBudget()">Save Budget</button>
+        <p id="savedBudget"></p>
+        <div id="budgetAlert" class="alert">
+          ⚠️ Your cart total exceeded your budget!
         </div>
-        <span class="star" onclick="toggleFavorite(this, 'Milk')">☆</span>
+      </div>
+
+      <h3>Products</h3>
+
+      <div class="item">
+        <span>Milk - 1.5 OMR</span>
+        <button onclick="addToCart('Milk', 1.5)">Add</button>
       </div>
 
       <div class="item">
-        <div>
-          <strong>Bread</strong><br />
-          <span class="price">0.80 OMR</span>
-        </div>
-        <span class="star" onclick="toggleFavorite(this, 'Bread')">☆</span>
+        <span>Bread - 0.8 OMR</span>
+        <button onclick="addToCart('Bread', 0.8)">Add</button>
       </div>
 
       <div class="item">
-        <div>
-          <strong>Apple Juice</strong><br />
-          <span class="price">1.20 OMR</span>
-        </div>
-        <span class="star" onclick="toggleFavorite(this, 'Apple Juice')"
-          >☆</span
-        >
+        <span>Rice - 3.2 OMR</span>
+        <button onclick="addToCart('Rice', 3.2)">Add</button>
       </div>
 
-      <div class="total">Total: 3.50 OMR</div>
+      <div class="item">
+        <span>Juice - 1.1 OMR</span>
+        <button onclick="addToCart('Juice', 1.1)">Add</button>
+      </div>
 
-      <button class="checkout-btn" onclick="location.href = 'checkout.php'">
-        Proceed to Checkout
-      </button>
+      <div class="card">
+        <h3>Cart Items</h3>
+        <div id="cartItems"></div>
+        <div class="total">Total: <span id="total">0.00</span> OMR</div>
+        <br />
+        <button onclick="location.href = 'checkout.php'">Checkout</button>
+      </div>
     </div>
 
     <div class="footer">SmartCart | support@smartcart.com</div>
 
     <script>
-      function toggleFavorite(element, itemName) {
-        let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      let budget = localStorage.getItem("budget") || "";
 
-        if (favorites.includes(itemName)) {
-          favorites = favorites.filter((item) => item !== itemName);
-          element.classList.remove("active");
-          element.innerHTML = "☆";
-        } else {
-          favorites.push(itemName);
-          element.classList.add("active");
-          element.innerHTML = "★";
+      function saveBudget() {
+        let value = document.getElementById("budgetInput").value;
+
+        if (value === "" || value <= 0) {
+          alert("Please enter a valid budget");
+          return;
         }
 
-        localStorage.setItem("favorites", JSON.stringify(favorites));
+        budget = value;
+        localStorage.setItem("budget", budget);
+        showBudget();
+        checkBudget();
       }
 
-      window.onload = function () {
-        let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+      function showBudget() {
+        if (budget) {
+          document.getElementById("savedBudget").innerText =
+            "Your budget: " + budget + " OMR";
+          document.getElementById("budgetInput").value = budget;
+        }
+      }
 
-        document.querySelectorAll(".star").forEach((star) => {
-          let itemName = star.getAttribute("onclick").match(/'([^']+)'/)[1];
+      function addToCart(name, price) {
+        let currentTotal = getTotal();
+        let newTotal = currentTotal + price;
 
-          if (favorites.includes(itemName)) {
-            star.classList.add("active");
-            star.innerHTML = "★";
-          }
+        if (budget && newTotal > Number(budget)) {
+          document.getElementById("budgetAlert").style.display = "block";
+          alert("⚠️ This product exceeds your budget!");
+          return;
+        }
+
+        cart.push({ name: name, price: price });
+        localStorage.setItem("cart", JSON.stringify(cart));
+        renderCart();
+      }
+
+      function getTotal() {
+        return cart.reduce((sum, item) => sum + item.price, 0);
+      }
+
+      function renderCart() {
+        let cartItems = document.getElementById("cartItems");
+        cartItems.innerHTML = "";
+
+        cart.forEach((item, index) => {
+          cartItems.innerHTML += `
+      <p>${item.name} - ${item.price} OMR 
+      <button onclick="removeItem(${index})">Remove</button></p>
+    `;
         });
-      };
+
+        document.getElementById("total").innerText = getTotal().toFixed(2);
+        checkBudget();
+      }
+
+      function removeItem(index) {
+        cart.splice(index, 1);
+        localStorage.setItem("cart", JSON.stringify(cart));
+        renderCart();
+      }
+
+      function checkBudget() {
+        let alertBox = document.getElementById("budgetAlert");
+
+        if (budget && getTotal() > Number(budget)) {
+          alertBox.style.display = "block";
+        } else {
+          alertBox.style.display = "none";
+        }
+      }
+
+      showBudget();
+      renderCart();
     </script>
   </body>
 </html>
